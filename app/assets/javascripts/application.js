@@ -12,5 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require 'lib/angular/angular.min'
+//= require 'controllers'
+//= require_self
+
+angular.module('kanbanapp', ['kanban.controllers']);
