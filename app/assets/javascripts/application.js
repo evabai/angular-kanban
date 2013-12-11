@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require 'lib/angular/angular.min'
 //= require 'controllers'
+//= require 'directives'
 //= require_self
 
-angular.module('kanbanapp', ['kanban.controllers']);
+angular.module('kanbanapp', ['kanban.controllers', 'kanban.directives']);

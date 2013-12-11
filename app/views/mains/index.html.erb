@@ -30,19 +30,24 @@
         <h3>Kanban Project Management System</h3>
       </div>
       <div>
-      	<form name="add-new-container" ng-submit="addNewContainer();">
-      		<input type="text" ng-model="newContainer.title" placeholder="Enter a title here"><br /><br />
-      		<input type="submit" value="Add">
+      	<form name="add_new_container" novalidate ng-submit="addNewContainer();">
+      		<input type="text" kb-focus ng-model="newContainer.title" name="new_container_title" placeholder="Enter a title here" required ng-minlength="3" ng-maxlength="25">
+      		<span style="color:red; font-size:12px;">
+      			<span ng-show="(containers.length < 3 && !add_new_container.new_container_title.$focused && add_new_container.new_container_title.$dirty && add_new_container.new_container_title.$invalid)">
+      				Board name is required without spaces (min. 3 characters and max. 25 characters)
+      			</span>
+      		</span><br /><br />
+      		<input type="submit" value="Add" ng-disabled="!(containers.length < 3) || (add_new_container.$invalid)">
       	</form>
       </div>
       <div class="row">
         <div class="col-6 col-sm-6 col-lg-4" ng-repeat="container in containers">
-        	<div><h3>{{container.title}}</h3></div>
+        	<div><h3>{{container.title}} - <a href="javascript:void(0);" ng-click="deleteContainer(container)">X</a></h3></div>
         	
-        	<div ng-repeat="task in tasksCont1">
+        	<div ng-repeat="task in getTasksForCont(container.id)">
 	          <h2>{{task.title}}</h2>
 	          <p>{{task.description}} </p>
-	          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+	          <p><a href="javascript:void(0);">View</a> | <a href="javascript:void(0);" ng-click="deleteTask(task)">Delete</a></p>
          	</div>
         
         </div><!--/span-->
@@ -66,7 +71,7 @@
        		<option ng-repeat="c in containers" value="{{c.id}}" title="{{c.title}}" >{{c.title}}</option>
        	</select>
       <hr>
-      <input type="submit" value="Add">
+      <input type="submit" value="Add" ng-disabled="!(containers.length > 0)">
      </form>
     </div><!--/span-->
   </div><!--/row-->
